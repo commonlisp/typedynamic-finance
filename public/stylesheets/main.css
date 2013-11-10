@@ -1,0 +1,15 @@
+p {
+	font-family: sans-serif;
+}
+
+table {
+	border: black;
+	border-width: 2px;
+	border-style: solid;
+}
+
+table td {
+	border: black;
+	border-width: 2px;
+	border-style: solid;
+}

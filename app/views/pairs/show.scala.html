@@ -1,0 +1,12 @@
+@(m : Map[String, String])
+
+@main("Pairs Trade") {
+<table>
+<tr></tr>
+@for( (k,v) <- m) {
+  <tr><td>@k</td>
+      <td>@v</td>
+  </tr>
+}
+</table>
+}

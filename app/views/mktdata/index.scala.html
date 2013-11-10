@@ -1,0 +1,79 @@
+@(data: List[(String, String)])
+
+@scripts = {
+	
+    <script type="text/javascript">
+    var ws;
+    $(document).ready( function () {
+    	$('#status').append("Testing");
+	$.each(fieldOrder, function(k,v) { $('table tr').append("<th>" + v + "</th>"); });
+        ws = new WebSocket("ws://localhost:9000/mktdatasock")
+        ws.onopen = openStatus;
+        ws.onmessage = recvMktData;
+        ws.onerror = reportErr;
+        $('#tickadd').submit( function () {
+        	subscribe();
+        	return false;
+        });
+    });
+
+    function reportErr() {
+    	$('#status').append("<br />Websocket error");
+    }
+    function openStatus() {
+    	$('#status').append("<br />Websocket open");
+    }
+
+    var recvData; 
+
+    var fieldOrder = ["lastPrice", "bidPrice", "askPrice", "low", "high", "close", "other", "timeDelta"];
+
+    function recvMktData(msgevt) {
+    	recvData = msgevt.data;
+	console.log("Received " + recvData)
+    	parsedData = JSON.parse(recvData)
+	symb = parsedData["symbol"]
+        if ($('#' + symb).length == 0) {
+            	$('table').append("<tr id=\"" + symb + "\"><td>" + symb + "</td></tr>");
+		$.each(fieldOrder, function (k,v) { $('#'+symb).append("<td class=\"" + v + "\"></td>"); });
+		$('#'+symb).append("<td><button onclick=\"cancel('"+symb+"');\">Cancel</button></td>");
+        }
+	ticktype = parsedData["ticktype"]
+        $('#'+symb + ' .' + ticktype).empty();
+        $('#'+symb + ' .' + ticktype).append(parsedData["price"]);		
+    }
+
+    function cancel(symb) {
+      console.log("Canceling mkt data req for " + symb);
+      ws.send(symb+":del");
+      $('#'+symb).remove();
+    }
+
+    function subscribe() {
+    	var symbol = $('#tickadd input:text').val();
+    	$('#status').append("<br />" + symbol);
+    	ws.send(symbol);
+    }
+
+    </script>
+}
+
+@main("Market Data",scripts) {
+
+
+
+    <div id="status">
+
+    </div>
+
+    <h1>Market Data</h1>
+	<table>
+	<tr><th>Contract</th></tr>
+    </table>
+
+    <form id="tickadd" action="#">
+    	<input type="text"></input>
+    	<input type="submit"></input>
+    </form>
+
+}

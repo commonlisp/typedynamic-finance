@@ -1,0 +1,19 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+GET	/bondportfolios/:symbol	    controllers.BondETF.show(symbol)
+POST	/bondportfolios		    controllers.BondETF.newBondPortfolio
+GET	/bondportfolios		    controllers.BondETF.bondportfolios
+GET	/pairs/:long/:short	    controllers.PairsController.show(long,short)
+GET	/pairs                  controllers.PairsController.index
+POST	/events			controllers.Event.newEvent
+GET	/events/{id}		controllers.Event.show(id)
+GET /mktdata  			controllers.MktData.index
+GET /mktdata/:symbol	controllers.MktData.getData(symbol)
+DELETE /mktdata/:symbol	controllers.MktData.delete(symbol)
+GET /mktdatasock		controllers.MktData.sock
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

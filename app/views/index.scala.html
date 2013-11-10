@@ -1,0 +1,14 @@
+@(bondyields: Map[String,Float])
+
+@main("Fixed Income Markets") {
+
+   <h1>Yields</h1>    
+   <table>
+   @for( (k,y) <- bondyields) {
+     <tr><td>@k</td><td>@y</td></tr>
+   } 
+   </table> 
+   
+   <h1>Spreads</h1>
+   
+}

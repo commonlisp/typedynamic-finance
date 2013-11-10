@@ -1,0 +1,24 @@
+@(events: List[Event], eventForm: Form[(String,String)])
+
+
+@import helper._
+
+@main("Event Risk") {
+
+  <h1>@events.size event(s)</h1>
+  <table>
+    @events.map { evt =>
+       <tr>
+           <td>@evt.descr</td>
+           <td>@evt.dates</td>
+       </tr>
+    }
+  </table>
+
+  <h2>Add new event</h2>
+  @form(routes.Event.newEvent) {
+    @inputText(eventForm("descr"))
+    @inputText(eventForm("dates"))
+    <input type="submit" value="Create">
+  }
+}          

@@ -1,0 +1,10 @@
+@(pairs : List[(String,String)])
+
+
+@main("Pairs Index ") {
+	<table>
+		@for( (k,v) <- pairs) {
+		<tr><td>@k</td><td>@v</td></tr>
+	} 
+</table>
+}

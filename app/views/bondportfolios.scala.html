@@ -1,0 +1,25 @@
+@(portfolios: List[BondPortfolio], rates: collection.immutable.Map[String, Float], portfolioForm: Form[(String,String)])
+
+@import helper._
+
+@main("Bond Portfolios") {
+
+  <h1>@portfolios.size portfolio(s)</h1>
+  <table>
+    @portfolios.map { portfolio =>
+       <tr>
+           <td>@portfolio.symbol</td>
+           <td>@portfolio.descr</td>
+	         <td>@rates(portfolio.symbol)</td>
+       </tr>
+    }
+  </table>
+
+  <h2>Add new bond portfolio</h2>
+  @form(routes.BondETF.newBondPortfolio) {
+    @inputText(portfolioForm("symbol"))
+    @inputText(portfolioForm("descr"))
+    @inputText(portfolioForm("duration"))
+    <input type="submit" value="Create">
+  }
+}          

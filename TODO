@@ -1,0 +1,17 @@
+1. Implement pairs trading analysis identifying trailing week and month pair trade performance:
+   Parameters: 
+   a. Long and short contract
+   b. Hedge ratio (should be computed based on returns?)
+   Results of interest:
+   a. Return
+   b. Maximum drawdown
+   c. Volatility, standard deviation
+2. Implement scanner that given a portfolio of assets, identifies the one with the greatest volume deviation from historical norms. 
+3. Event Risk analyzer: Given a specified recurring calendar event, calculate effects on returns, volume, and volatility. Construct a time series based on that recurring event. 
+   a. Parse calendar schedule of a recurring event(s)
+   b. Specify time series window: from time of event to next occurrence or n-day window
+   c. Construct time series
+   d. Calculate properties of time series 
+   e. Coordinate document release scheduling and parsing
+4. Quote Monitor or just Portfolio Monitor. This would entail a WebSocket interface. 
+
