@@ -10,19 +10,21 @@ import play.api.libs.json._
 import java.util.{Date, Calendar}
 
 import com.mongodb.casbah.Imports._
-import com.ib.client._
+//import com.ib.client._
 
 import collection.mutable._
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 object MktData extends Controller {
-
+/*
   var id = 0
   val cl = new EClientSocket(IBWrapper)  
+*/
 
+  var idsymbol = new HashMap[Int, String]
   val coll = MongoConnection()("typedynamic")("mktdataSubscriptions")
-
+/*
   object IBWrapper extends EWrapper 
   {
 
@@ -114,7 +116,6 @@ object MktData extends Controller {
     cl.reqContractDetails(nextReqId(), c)
   }
 
-  var idsymbol = new HashMap[Int, String]
   var mktDataHandlers = new HashMap[Int, (Int, Double, Int) => Unit]  
   var prices = new HashMap[String, Map[String, Queue[(Long, Double)]]]
 
@@ -155,7 +156,7 @@ object MktData extends Controller {
             case None => ()
           }
           //sockEnumerator.push(wsMsg)
-		  channel.push(wsMsg)
+	  channel.push(wsMsg)
         }))
 
     cl.reqMktData(n_id, 
@@ -172,10 +173,11 @@ object MktData extends Controller {
     coll.map(x => reqMktData(x("symbol").asInstanceOf[String], 
                              x("assettype").asInstanceOf[String]))
   }
+  */
 
   def getData(symbol : String) = WebSocket.using[String] { request =>
     // Log events to the console
-    val in = Iteratee.foreach[String](println).mapDone { _ =>
+    val in = Iteratee.foreach[String](println).map { _ =>
       println("Disconnected")
     }
   
@@ -197,11 +199,11 @@ object MktData extends Controller {
                   case "ind" => {
 		    val holdings = IndexPortfolio(a(0))
 		    println("Holdings: " + holdings)
-		    holdings.map(reqMktData(_))   
+		    //holdings.map(reqMktData(_))   
 		  }
 		  case "del" => {
 		    val symid = idsymbol.map(_.swap)
-		    cl.cancelMktData(symid(a(0)))
+		    //cl.cancelMktData(symid(a(0)))
 		  }
                   case _ => {
                     val o = MongoDBObject("symbol" -> a(0), 
@@ -209,14 +211,14 @@ object MktData extends Controller {
                     coll.findOne(o) match {
                       case None => { 
                         coll += o
-                        reqMktData(a(0),a(1))
+                        //reqMktData(a(0),a(1))
                       }
                       case Some(_) => ()
                     }       
 		  }
 		}             
                                   }).
-            mapDone { _ =>
+            map { _ =>
       println("Disconnected websocket")
     }
   
@@ -227,10 +229,10 @@ object MktData extends Controller {
 
   def index() = Action {
     val data = List()
-    println("isConnected " + cl.isConnected() )
+    /*println("isConnected " + cl.isConnected() )
     if (!cl.isConnected()) {
       start()
-    }
+    } */
     Ok(views.html.mktdata.index(data))
   }
 
