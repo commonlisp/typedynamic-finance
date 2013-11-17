@@ -58,14 +58,13 @@ object PairsController extends Controller {
            select(".yfnc_tabledata1 a").map(x => x.text()).toList
   }
 
-/*
   def portfolioReturns(symbol: String, days: Int): DenseMatrix[Double] = {
     val components = portfolioComponents(symbol)
     return new DenseMatrix[Double](days, 
                            components.size(), 
                            components.flatMap(c => periodPrices(c, days)).toArray)
   }
- */
+ 
   def show(long: String, short: String) = Action {
      val ret = periodPairReturn(long, short, 5)
      val o = MongoDBObject("pair" -> MongoDBObject("long" -> long, 
