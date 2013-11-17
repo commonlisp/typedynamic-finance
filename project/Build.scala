@@ -14,7 +14,7 @@ object ApplicationBuild extends Build {
       "org.xerial" % "sqlite-jdbc" % "3.7.2",
       "org.mongodb" %% "casbah" % "2.6.3",
       "com.typesafe" % "config" % "0.5.0",
-      "org.scalanlp" % "breeze_2.10" % "0.5.2"
+      "org.scalanlp" %% "breeze" % "0.5.2"
       // Add your project dependencies here,
     )
 

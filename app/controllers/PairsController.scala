@@ -46,11 +46,11 @@ object PairsController extends Controller {
     return periodReturn(longPrices) - periodReturn(shortPrices)
   }
 
-/*
+
   def maxReturnPair(prices: DenseMatrix[Double]): (Int, Int) = {
     return (0, 0)
   }
- */ 
+ 
 
   def portfolioComponents(symbol: String): List[String] = {
     val queryURLstr = "http://finance.yahoo.com/q/cp?s="
